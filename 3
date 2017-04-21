@@ -1,0 +1,169 @@
+#include <iostream>
+#include <string>
+#include <math.h>
+
+using namespace std;
+
+class Rectangle {
+
+protected:
+
+	int first_side;
+	int second_side;
+
+public:
+
+	Rectangle() {
+
+		first_side = 0;
+		second_side = 0;
+	}
+
+	Rectangle(int first_side, int second_side) {
+
+		this->first_side = first_side;
+		this->second_side = second_side;
+	}
+
+	Rectangle(Rectangle *rect) {
+
+		first_side = rect->first_side;
+		second_side = rect->second_side;
+
+	}
+
+	~Rectangle() {}
+
+	void setRectangle();
+	void getRectangle();
+	int perimetr();
+	int square();
+	void equal();
+
+	friend int operator +(Rectangle& a1, Rectangle& a2) {
+
+		int s = a1.square() + a2.square();
+		return s;
+
+	}
+
+	Rectangle operator =(Rectangle& a1) {
+
+		first_side = a1.first_side;
+		second_side = a1.second_side;
+		return this;
+	}
+
+};
+
+
+
+class ColoredRectangle : protected Rectangle {
+
+protected:
+
+	string color;
+
+public:
+
+	ColoredRectangle();
+	ColoredRectangle(int first_side, int second_side, string color);
+
+	~ColoredRectangle() {}
+
+	void setColor();
+	void getColor();
+
+};
+
+ColoredRectangle::ColoredRectangle() {
+
+	color = "NULL";
+
+}
+
+ColoredRectangle::ColoredRectangle(int first_side, int second_side, string color) {
+
+	this->color = color;
+
+}
+
+
+
+void Rectangle::setRectangle() {
+
+	cout << "Enter first side : " << endl;
+	cin >> first_side;
+	cout << "Enter second side : " << endl;
+	cin >> second_side;
+
+}
+
+void ColoredRectangle::setColor() {
+
+	cout << "Enter color : " << endl;
+	cin >> color;
+
+}
+
+void Rectangle::getRectangle() {
+
+	cout << "First side = " << first_side << endl;
+	cout << "Second side = " << second_side << endl;
+}
+
+void ColoredRectangle::getColor() {
+
+	cout << "Color is " << color << endl;
+
+}
+
+int Rectangle::perimetr() {
+
+	return(2 * (first_side + second_side));
+
+}
+
+int Rectangle::square() {
+
+	return (first_side * second_side);
+
+}
+
+void Rectangle::equal() {
+
+	if (first_side == second_side)
+		cout << "It`s a square!" << endl;
+
+}
+
+int main() {
+	Rectangle a(10, 20);
+	Rectangle b;
+	b = a;
+	b.getRectangle();
+	int c;
+	c = a + b;
+	cout << c << endl;
+	Rectangle* R;
+	R = new Rectangle;
+
+	Rectangle rect = new Rectangle(10, 20);
+	rect.getRectangle();
+	R->setRectangle();
+	R->getRectangle();
+	R->equal();
+	int P = R->perimetr();
+	int S = R->square();
+	cout << "Perimetr = " << P << endl;
+	cout << "Square = " << S << endl;
+	delete R;
+
+	ColoredRectangle* C;
+	C = new ColoredRectangle;
+	C->setColor();
+	C->getColor();
+
+	system("pause");
+	return 0;
+}
